@@ -55,11 +55,11 @@ export default {
         loadWeather() {
             this.$store.dispatch({ type: "loadWeather" });
             this.$store.dispatch({type: "fetchPhotos"})
-            this.$refs.scroll.innerHTML = ''
         },
         setFilter(filterBy) {
             this.$store.commit('setStoreFilter', filterBy.txt)
             this.loadWeather()
+            this.$refs.scroll.innerHTML = ''
         },
         setFavorite(city) {
             this.$store.commit('addFavorite', city)

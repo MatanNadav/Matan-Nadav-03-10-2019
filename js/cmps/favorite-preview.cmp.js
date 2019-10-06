@@ -36,7 +36,7 @@ export default {
           if(desc.includes("sunny")) return "animated/day.svg"
           else if(desc.includes("cloud")) return "animated/cloudy.svg"
           else if(desc.includes("rain") || desc.includes("showers")) return "animated/rainy-5.svg"
-          else "animated/weather.svg"
+          else return "animated/weather.svg"
         },
     },
 
