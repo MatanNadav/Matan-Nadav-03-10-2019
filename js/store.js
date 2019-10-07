@@ -36,7 +36,7 @@ const store = new Vuex.Store({
         },
         getTheme(state) {
             return state.isDarkMode
-        }
+        },
     },
     mutations: {
         setStoreFilter(state, txt) {
@@ -65,7 +65,7 @@ const store = new Vuex.Store({
         },
         setTheme(state) {
             state.isDarkMode = !state.isDarkMode
-        }
+        },
     },
     actions: {
         async loadWeather(context) {

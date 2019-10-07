@@ -25,7 +25,7 @@ export default {
     data() {
         return {
             observer:null,
-            isDark: false
+            isDark: false,
         }
     },
 

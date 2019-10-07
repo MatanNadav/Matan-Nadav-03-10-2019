@@ -20,6 +20,10 @@
     color: black;
 }
 
+.loading-icon > img{
+    width: 60rem;
+    height: 20rem
+}
 .theme-head {
     font-weight: bold;
     font-size: 18px;
