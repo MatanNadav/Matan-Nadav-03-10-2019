@@ -1,13 +1,13 @@
 import utilService from "./util.service.js"
 
 const APIKey = 'K8AdnAijb1LA9mVK7UDUZ3jGedN24gXX'
-
 const APIPhotoKey = '8bb66eaa263d92bbc7d4c63ecfdc5b3e'
 
-const locationAPI = `http://crossorigin.me/http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKey}&q=`;
-const conditionAPI = 'http://crossorigin.me/http://dataservice.accuweather.com/currentconditions/v1/';
-const fiveDaysForecastAPI = 'http://crossorigin.me/http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
-const flickrURL = `https://crossorigin.me/https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${APIPhotoKey}`;
+const corsKey = 'https://cors-anywhere.herokuapp.com/'
+const locationAPI = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=${APIKey}&q=`;
+const conditionAPI = 'http://dataservice.accuweather.com/currentconditions/v1/';
+const fiveDaysForecastAPI = 'http://dataservice.accuweather.com/forecasts/v1/daily/5day/';
+const flickrURL = `www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${APIPhotoKey}`;
 
 
 
@@ -17,11 +17,10 @@ export default {
 }
 
 
+
 async function findLocation(query) {
     try {
-        const res = await axios.get(locationAPI+query, {
-            headers: {"Access-Control-Allow-Origin": "*"}
-        })
+        const res = await axios.get(corsKey+locationAPI+query)
         const weather = await getCurrWeather(res.data[0].Key);
         const forecast = await getFiveDaysForecast(res.data[0].Key);
         const cityName = res.data[0].LocalizedName
@@ -37,9 +36,7 @@ async function findLocation(query) {
 
 async function getCurrWeather (locKey=215854) {
     try {
-        const res =  await axios.get(`${conditionAPI}${locKey}?apikey=${APIKey}`, {
-            headers: {"Access-Control-Allow-Origin": "*"}
-        })
+        const res =  await axios.get(`${corsKey}${conditionAPI}${locKey}?apikey=${APIKey}`)
         return res.data
     }
     catch (err) {
@@ -51,9 +48,7 @@ async function getCurrWeather (locKey=215854) {
 
 async function getFiveDaysForecast(locKey=215854) {
     try {
-        const res = await axios.get(`${fiveDaysForecastAPI}${locKey}?apikey=${APIKey}&details=false&metric=true`, {
-            headers: {"Access-Control-Allow-Origin": "*"}
-        })
+        const res = await axios.get(`${corsKey}${fiveDaysForecastAPI}${locKey}?apikey=${APIKey}&details=false&metric=true`)
         return res.data;
     }
     catch (err) {
@@ -65,9 +60,7 @@ async function getFiveDaysForecast(locKey=215854) {
 
 async function getLocationPhotos(query = "tel aviv") {
     try {
-        const res = await axios.get(`${flickrURL}&tags=${query}&format=json&nojsoncallback=1`, {
-            headers: {"Access-Control-Allow-Origin": "*"}
-        })
+        const res = await axios.get(`${corsKey}${flickrURL}&tags=${query}&format=json&nojsoncallback=1`)
         return res.data.photos.photo
     }
     catch (err) {
