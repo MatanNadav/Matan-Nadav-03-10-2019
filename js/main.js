@@ -9,6 +9,14 @@ new Vue({
             <router-view></router-view>
         </section>
     `,
+    computed: {
+        isLoading() {
+            this.$store.getters.getIsLoading;
+        }
+    },
+    created() {
+        this.$store.dispatch('setLoader')
+    },
     router: myRouter,
     store: myStore
 

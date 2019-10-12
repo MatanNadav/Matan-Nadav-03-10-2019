@@ -20,9 +20,11 @@
     color: black;
 }
 
-.loading-icon > img{
-    width: 60rem;
-    height: 20rem
+.loader {
+    display: block;
+    margin: 0 auto;
+    width: 140px;
+    height: 140px;
 }
 .theme-head {
     font-weight: bold;

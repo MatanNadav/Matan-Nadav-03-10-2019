@@ -5,6 +5,7 @@ const store = new Vuex.Store({
     state: {
         isFavorite: null,
         isDarkMode: false,
+        isLoading: false,
         filterBy: {
             txt:'Tel Aviv'
         },
@@ -37,6 +38,9 @@ const store = new Vuex.Store({
         getTheme(state) {
             return state.isDarkMode
         },
+        getLoading(state) {
+            return state.isLoading;
+        }
     },
     mutations: {
         setStoreFilter(state, txt) {
@@ -66,19 +70,28 @@ const store = new Vuex.Store({
         setTheme(state) {
             state.isDarkMode = !state.isDarkMode
         },
+        setLoading(state, {isLoading}) {
+            state.isLoading = isLoading
+        }
     },
     actions: {
         async loadWeather(context) {
+            context.commit({ type: 'setLoading', isLoading:true })
             const res = await weatherService.findLocation(context.state.filterBy.txt);
             const {weather, forecast, cityName} = res
+            // setTimeout(1500);
             context.commit({ type: 'setCurrWeather', weather })
             context.commit({ type: 'setCurrforecast', forecast })
             context.commit({ type: 'setCurrCity', cityName })
+            context.commit({ type: 'setLoading', isLoading:false })
         },
         async fetchPhotos(context) {
+            context.commit({type: 'setLoading', isLoading:true})
             const photos = await weatherService.getLocationPhotos(context.state.filterBy.txt)
             context.commit({type: "setCityPhotos", photos})
-        }
+            context.commit({type: 'setLoading', isLoading: false})
+        },
+        
 
     }
 })

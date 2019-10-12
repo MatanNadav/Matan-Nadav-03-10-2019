@@ -1,5 +1,6 @@
 import appHeader from "../cmps/app-header.cmp.js"
 import weatherPreview from "../cmps/weather-preview.cmp.js"
+import loader from "../cmps/loader.cmp.js"
 import eventBus from "../event-bus.js"
 
 const options = {
@@ -15,6 +16,8 @@ export default {
     <section class="home-container max-width":class="{dark: isDark}">
         <span>{{getTheme}}</span>
         <app-header></app-header>
+        <weather-filter @emit-filter="setFilter"></weather-filter>
+        <loader v-if="isLoading"></loader>
         <weather-preview :weather="weatherForDisplay" :forecast="forecastForDisplay" :cityName="cityNameToRender" @emit-filter="setFilter" @emit-favorite="setFavorite" :isFavorite="getIsFavorite"></weather-preview>
         <section class="scroll-container" ref="scroll">
         </section>
@@ -48,6 +51,9 @@ export default {
             let theme = this.$store.getters.getTheme
             if(theme) this.isDark = true;
             else this.isDark = false;
+        },
+        isLoading() {
+            return this.$store.getters.getLoading
         }
     },
 
@@ -94,6 +100,7 @@ export default {
     },
     components: {
         weatherPreview,
-        appHeader
+        appHeader,
+        loader
     }
 }

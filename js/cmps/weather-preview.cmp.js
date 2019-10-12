@@ -5,7 +5,6 @@ export default {
     name: 'weather-preview',
     template: `
     <section v-if="weather" class="preview-container flex column">
-        <weather-filter @emit-filter="emitSetFilter"></weather-filter>
         <h2 class="weather-head">Current Weather For {{cityName}} </h2>
     <div class="card weather-card" style="width: 65rem; height: 43rem;">
         <img :src="getWeatherIcon" class="card-img-top" alt="weather-icon">
@@ -55,14 +54,9 @@ export default {
 
     },
     methods: {
-        emitSetFilter(filterBy) {
-            this.$emit('emit-filter', filterBy)
-        },
         emitFavorite() {
             this.$emit('emit-favorite', this.weather)
         }
-    },
-    created() {
     },
     components: {
         weatherFilter,
